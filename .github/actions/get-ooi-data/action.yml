@@ -1,0 +1,27 @@
+name: "get-ooi-data"
+
+description: "Get Ocean Observatories Initiative data"
+
+inputs:
+  node:
+    description: 'Alphanumeric node id (e.g. PC01A)'
+    required: false
+    default: 'PC01A'
+  start_time:
+    description: 'start_time formatted as Y-m-dTH-M-S'
+    required: false
+  end_time:
+    description: 'end_time formatted as Y-m-dTH-M-S'
+    required: false
+  segment_length:
+    description: 'Segment length in minutes (float)'
+    required: false
+    default: 5.0
+  output_dir:
+    description: 'Path to the output directory'
+    required: false
+    default: 'output'
+
+runs:
+  using: "docker"
+  image: "Dockerfile"

@@ -1,0 +1,43 @@
+name: Get OOI data
+
+on:
+  workflow_dispatch:
+    inputs:
+      node:
+        description: 'Alphanumeric node id (e.g. PC01A)'
+        required: false
+        default: 'PC01A'
+      start_time:
+        description: 'start_time formatted as Y-m-dTH-M-S'
+        required: false
+      end_time:
+        description: 'end_time formatted as Y-m-dTH-M-S'
+        required: false
+      segment_length:
+        description: 'Segment length in minutes (float)'
+        required: false
+        default: 5.0
+      output_dir:
+        description: 'Path to the output directory'
+        required: false
+        default: 'output'
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: get-ooi-data
+        uses: ./.github/actions/get-ooi-data
+        with:
+          node: ${{ github.event.inputs.node }}
+          start_time: ${{ github.event.inputs.start_time }}
+          end_time: ${{ github.event.inputs.end_time }}
+          segment_length: ${{ github.event.inputs.segment_length }}
+          output_dir: ${{ github.event.inputs.output_dir }}
+
+      - name: Check saved files
+        run: |
+          ls ${{ github.event.inputs.output_dir }}
